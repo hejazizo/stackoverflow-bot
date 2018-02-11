@@ -292,6 +292,7 @@ def chat(message):
 
                     for student in best_students:
                         try:
+                            print(student)
                             student_id = student[0]
                             first_name = student[1]
                             last_name = student[2]
