@@ -404,6 +404,9 @@ question_id = (%s) AND Answers.tel_id = Users.tel_id ORDER BY role DESC, accepte
                 question_owner_role = cur.execute('''SELECT role FROM Users, Questions WHERE
                                       Users.tel_id = Questions.tel_id AND Questions.id = (%s)''', (question_id, )).fetchone()[0]
                 # if question is NOT sent by VIP, then previous accepted answer is removed and newer answer is replaced
+
+                accepted_already_flag = cur.execute('''SELECT accepted_answer FROM Answers WHERE question_id = (%s)''', (forwarded_question, )).fetchone()[0]
+
                 if question_owner_role not in vip:
                     # to check if already another answer was accepted
                     cur.execute('''UPDATE Answers SET accepted_answer = 0 WHERE question_id = (%s)''', (forwarded_question, ))
@@ -419,18 +422,19 @@ question_id = (%s) AND Answers.tel_id = Users.tel_id ORDER BY role DESC, accepte
 
                 # Sending Question and Accepted Answer to all users except question owner
                 send_list = cur.execute('''SELECT tel_id FROM Users WHERE tel_id != (%s)''', (call.from_user.id, )).fetchall()
-
-                for user in send_list:
-                    try:
-                        if question_owner_role not in vip:
-                            bot.send_message(user[0], emoji.emojize(':white_heavy_check_mark: #Q_{0} is answered now.'.
-                                        format(forwarded_question)), reply_markup=showhere_keyboard, disable_notification=True)
-                        else:
-                            accepted_answers_count = cur.execute('''SELECT count(answers) FROM Answers WHERE question_id = (%s) and accepted_answer = 1''', (question_id, )).fetchone()[0]
-                            bot.send_message(user[0], emoji.emojize(':white_heavy_check_mark: #Q_{0} sent by ADMIN has accepted answer ({1} Accepted Answers).'
-                                                                    '\n:right_arrow: Enter Question Number ({0}) to see all answers.'.format(question_id, accepted_answers_count)), disable_notification=True)
-                    except Exception as e:
-                        print('Sending Accepted Answer to some users failed!', e)
+                
+                if accepted_already_flag != 1:
+                    for user in send_list:
+                        try:
+                            if question_owner_role not in vip:
+                                bot.send_message(user[0], emoji.emojize(':white_heavy_check_mark: #Q_{0} is answered now.'.
+                                            format(forwarded_question)), reply_markup=showhere_keyboard, disable_notification=True)
+                            else:
+                                accepted_answers_count = cur.execute('''SELECT count(answers) FROM Answers WHERE question_id = (%s) and accepted_answer = 1''', (question_id, )).fetchone()[0]
+                                bot.send_message(user[0], emoji.emojize(':white_heavy_check_mark: #Q_{0} sent by ADMIN has accepted answer ({1} Accepted Answers).'
+                                                                        '\n:right_arrow: Enter Question Number ({0}) to see all answers.'.format(question_id, accepted_answers_count)), disable_notification=True)
+                        except Exception as e:
+                            print('Sending Accepted Answer to some users failed!', e)
 
             else:
                 bot.answer_callback_query(callback_query_id=call.id, text="Answer already accepted!", show_alert=True)
