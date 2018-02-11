@@ -13,12 +13,12 @@ def send_question(question_id, receiver_tel_id, short):
     load_answers = telebot.types.InlineKeyboardButton(emoji.emojize(':bright_button: Load Answers'), callback_data='load_answers')
 
 
-    # like question button
-    liked_number = cur.execute('''SELECT count(*) from Like_Question WHERE question_id = (%s)''', (question_id, )).fetchone()[0]
-    if liked_number == 0:
-        like_button = telebot.types.InlineKeyboardButton(emoji.emojize(':red_heart:'), callback_data='like_question')
-    else:
-        like_button = telebot.types.InlineKeyboardButton(emoji.emojize('{0} :red_heart:'.format(liked_number)), callback_data='like_question')
+    # like question button is disabled now
+    # liked_number = cur.execute('''SELECT count(*) from Like_Question WHERE question_id = (%s)''', (question_id, )).fetchone()[0]
+    # if liked_number == 0:
+    #     like_button = telebot.types.InlineKeyboardButton(emoji.emojize(':red_heart:'), callback_data='like_question')
+    # else:
+    #     like_button = telebot.types.InlineKeyboardButton(emoji.emojize('{0} :red_heart:'.format(liked_number)), callback_data='like_question')
 
     # GETTING ADMINS AND TAs
     # Receiver_tel_id which is different from send_answer.py -> answer_owner is used there
@@ -71,9 +71,15 @@ AND Users.tel_id = Answers.tel_id AND Users.role != (%s)''',
             if (question_state == 'OPEN') or (role in ['ADMIN', 'TA']):
                 if role == 'ADMIN':
                     ### ADMINs can load answers for every question any time
+
+                    # like is disabled now
+                    # keyboard.add(answer_question, like_button, load_answers, next_page_question)
                     keyboard.add(answer_question, like_button, load_answers, next_page_question)
+
                 else:
-                    keyboard.add(answer_question, like_button, next_page_question)
+                    # like is disabled now
+                    # keyboard.add(answer_question, like_button, next_page_question)
+                    keyboard.add(answer_question, next_page_question)
 
         ## Setting keyboard for OWNER, only SHOWMORE and LOAD ANSWERS
         elif receiver_tel_id == question_owner:

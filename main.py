@@ -178,11 +178,13 @@ def chat(message):
                                 if counter % 3 == 0:
                                     questions = questions + '\n'
 
-                                like_number = cur.execute('''SELECT count(*) FROM Like_Question WHERE question_id = (%s)''', (question[0], )).fetchone()[0]
-                                if like_number > 0:
-                                    questions += '#Q_{0} ({1}:red_heart:)  '.format(question[0], like_number)
-                                else:
-                                    questions += '#Q_{0}  '.format(question[0])
+
+                                # LIKE is disabled now
+                                # like_number = cur.execute('''SELECT count(*) FROM Like_Question WHERE question_id = (%s)''', (question[0], )).fetchone()[0]
+                                # if like_number > 0:
+                                #     questions += '#Q_{0} ({1}:red_heart:)  '.format(question[0], like_number)
+                                # else:
+                                #     questions += '#Q_{0}  '.format(question[0])
 
                                 counter = counter + 1
                         else:
@@ -255,12 +257,13 @@ def chat(message):
                     else:
                         questions += 'None'
 
-                    questions += emoji.emojize('\n:down_arrow: Top Questions:\n')
-                    best_questions = cur.execute('''SELECT question_id, count(liked_by) FROM Like_Question GROUP BY question_id ORDER BY count(liked_by) DESC, question_id DESC LIMIT 3''').fetchall()
-                    for question in best_questions:
-                        question_id = question[0]
-                        like_number = question[1]
-                        questions += emoji.emojize(':question_mark: #Q_{0} ({1}:red_heart:)\n'.format(question_id, like_number))
+                    # TOP Questions is disabled now
+                    # questions += emoji.emojize('\n:down_arrow: Top Questions:\n')
+                    # best_questions = cur.execute('''SELECT question_id, count(liked_by) FROM Like_Question GROUP BY question_id ORDER BY count(liked_by) DESC, question_id DESC LIMIT 3''').fetchall()
+                    # for question in best_questions:
+                    #     question_id = question[0]
+                    #     like_number = question[1]
+                    #     questions += emoji.emojize(':question_mark: #Q_{0} ({1}:red_heart:)\n'.format(question_id, like_number))
 
                     bot.send_message(message.from_user.id, questions, reply_markup=getfile_keyboard)
 
