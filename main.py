@@ -30,7 +30,7 @@ from send_answer import send_answer
 
 
 
-
+print('ROBOT STARTED!')
 admin_tel_id = 73106435
 
 
