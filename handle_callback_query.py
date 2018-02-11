@@ -138,6 +138,10 @@ AND Answers.tel_id = Users.tel_id AND Users.role != (%s)''', (question_id, 'ADMI
                         # else:
                         #     formatted_question = '#'+ str(question_id) + '   ' + str(question_status) + '\n' + q_sep + '\n' + question_text + '\n\n'
 
+                        if question_owner == call.from_user.id:
+                            formatted_question = '#'+ str(question_id) + '   ' + str(question_status) + ' - Sent by: You\n' + q_sep + '\n' + question_text + '\n\n'
+                        else:
+                            formatted_question = '#'+ str(question_id) + '   ' + str(question_status) + '\n' + q_sep + '\n' + question_text + '\n\n'
                         f.write(q_sep + '\n' + formatted_question)
 
                         ### ANSWERs OF each QUESTION
