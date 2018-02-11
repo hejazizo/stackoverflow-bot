@@ -220,6 +220,23 @@ question_id = (%s) AND Answers.tel_id = Users.tel_id ORDER BY role DESC, accepte
                 answer, keyboard = send_answer(forwarded_question, forwarded_user, call.from_user.id, short=True)
                 bot.edit_message_text(answer, call.from_user.id, call.message.message_id, reply_markup=keyboard)
 
+        # COMMENT
+
+        elif call.data == 'comment_question':
+            role = cur.execute('''SELECT role FROM Users WHERE tel_id = (%s)''', (call.from_user.id,)).fetchone()[0]
+            question_state = cur.execute('''SELECT status FROM Questions WHERE id = (%s)''', (forwarded_question,)).fetchone()[0]
+
+            if (question_state == 'OPEN'): # or (role in ['ADMIN', 'TA']):
+                bot.answer_callback_query(callback_query_id=call.id, text="Send Comment!")
+                cur.execute('''UPDATE Users SET state = (%s) WHERE tel_id = (%s)''', ('Send Comment', call.from_user.id))
+                bot.reply_to(call.message, emoji.emojize(
+                    ':right_arrow: Send your Comment for: *Question ' + str(forwarded_question) + '*'),
+                             reply_markup=Finish_Discard_keyboard, parse_mode='Markdown')
+            else:
+                # QUESTION IS CLOSED OR REPORTED
+                bot.answer_callback_query(callback_query_id=call.id, text="Question is {0}!".format(question_state),
+                                          show_alert=True)
+
         elif call.data == 'like_question':
 
             check_like = cur.execute('''SELECT question_id FROM Like_Question WHERE question_id = (%s) AND liked_by = (%s)''', (question_id, call.from_user.id, )).fetchone()

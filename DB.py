@@ -154,7 +154,21 @@ PRIMARY KEY (answer_id, reported_by)
 ####################################
 ####      COMMENT QUESTION      ####
 ####################################
+cur.execute('''
 
+CREATE TABLE IF NOT EXISTS Comments(
+id INTEGER NOT NULL UNIQUE,
+question_id INTEGER NOT NULL,
+tel_id INTEGER NOT NULL,
+comment TEXT,
+photo TEXT,
+document TEXT,
+document_type TEXT,
+document_size TEXT,
+send_date INTEGER,
+PRIMARY KEY (question_id, tel_id)  -- to provide multiple answers to a question by a specific user --> PRIMARY KEY (question_id, tel_id, answer)
+);
+''')
 
 
 #***************************************#

@@ -132,7 +132,7 @@ def photo_doc(message):
 #***************************************#
 @bot.message_handler(func=lambda message: True)
 def chat(message):
-    # print(emoji.demojize(message.text))
+    print(emoji.demojize(message.text))
 
     try:
         state = cur.execute('''SELECT state FROM Users WHERE tel_id = (%s)''',
@@ -441,7 +441,7 @@ question_id = (%s) AND Users.role = (%s)''', (question_id, 'ADMIN')).fetchall()
             ####################################
             ####        Send Question       ####
             ####################################
-            elif state in ['Send Question', 'Send Answer']:
+            elif state in ['Send Question', 'Send Answer', 'Send Comment']:
                 # FINISH KEY
                 if emoji.demojize(message.text) == ':white_heavy_check_mark: Finish':
                     handle_message_finish(message)

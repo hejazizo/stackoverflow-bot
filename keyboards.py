@@ -89,7 +89,7 @@ previous_page_help.add(previous_page_help_button)
 
 ### LONG QUESTION
 question_keyboard_showmore = telebot.types.InlineKeyboardMarkup()
-answer_question = telebot.types.InlineKeyboardButton(emoji.emojize(":bright_button:"), callback_data='answer_question')
+answer_question = telebot.types.InlineKeyboardButton(emoji.emojize(":bright_button: Answer"), callback_data='answer_question')
 next_page_question = telebot.types.InlineKeyboardButton(u"\u00BB", callback_data='next_page_question')
 question_keyboard_showmore.add(showmore, answer_question, next_page_question)
 

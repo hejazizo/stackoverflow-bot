@@ -11,7 +11,7 @@ def send_question(question_id, receiver_tel_id, short):
     # limiting long questions and specifying keyboard
     keyboard = telebot.types.InlineKeyboardMarkup(row_width=6)
     load_answers = telebot.types.InlineKeyboardButton(emoji.emojize(':bright_button: Load Answers'), callback_data='load_answers')
-
+    comment = telebot.types.InlineKeyboardButton(emoji.emojize(':memo: Comment'), callback_data='comment_question')
 
     # like question button is disabled now
     # liked_number = cur.execute('''SELECT count(*) from Like_Question WHERE question_id = (%s)''', (question_id, )).fetchone()[0]

@@ -135,6 +135,14 @@ VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)''',
         else:
             bot.send_message(message.from_user.id, emoji.emojize(':cross_mark: Empty Answer!'), reply_markup=main_reply_keyboard)
 
+    elif state == 'Send Comment':
+        cont_typing = cur.execute('''SELECT cont_typing FROM Users WHERE tel_id = (%s)''', (message.from_user.id,)).fetchone()[0]
+        if cont_typing is not None:
+            forwarded_question, question_owner, photo, document, document_type, document_size = cur.execute(
+                '''SELECT forwarded_question, forwarded_user, photo, document, document_type, document_size FROM Users WHERE tel_id = (%s)''',
+                (message.from_user.id,)).fetchone()
+            answers_count = cur.execute('''SELECT count(id) FROM Answers''').fetchone()
+
 
     # Sends a message to all users (restricted to admins)
     elif state == 'SEND MSG TO ALL USERS':
