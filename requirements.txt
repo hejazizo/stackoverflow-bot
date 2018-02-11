@@ -1,0 +1,6 @@
+pyTelegramBotAPI
+requests
+emoji
+numpy
+validate_email
+pygresql
