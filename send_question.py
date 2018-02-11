@@ -40,9 +40,14 @@ def send_question(question_id, receiver_tel_id, short):
             if (question_state == 'OPEN') or (role in ['ADMIN', 'TA']):
                 if role == 'ADMIN':
                     ### ADMINs can load answers for every question any time
-                    keyboard.add(showkey, answer_question, like_button, load_answers, next_page_question)
+
+                    # like is now disabled
+                    # keyboard.add(showkey, answer_question, like_button, load_answers, next_page_question)
+                    keyboard.add(showkey, answer_question, load_answers, next_page_question)
                 else:
-                    keyboard.add(showkey, answer_question, like_button, next_page_question)
+                    # like is now disabled
+                    # keyboard.add(showkey, answer_question, like_button, next_page_question)
+                    keyboard.add(showkey, answer_question, next_page_question)
             else:
                 keyboard.add(showkey)
 
