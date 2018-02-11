@@ -126,15 +126,17 @@ AND Answers.tel_id = Users.tel_id AND Users.role != (%s)''', (question_id, 'ADMI
                         question_text = question[2]
                         question_status = question[3]
 
-                        like_number = cur.execute('''SELECT count(*) FROM Like_Question WHERE question_id = (%s)''', (question[0],)).fetchone()[0]
-                        if question_owner == call.from_user.id:
-                            if like_number > 0:
-                                formatted_question = '#'+ str(question_id) + '   ' + str(question_status) + ' - Sent by: You - ' + 'Likes: {0}\n'.format(like_number) + q_sep + '\n' + question_text + '\n\n'
-                            else:
-                                formatted_question = '#'+ str(question_id) + '   ' + str(question_status) + ' - Sent by: You\n' + q_sep + '\n' + question_text + '\n\n'
 
-                        else:
-                            formatted_question = '#'+ str(question_id) + '   ' + str(question_status) + '\n' + q_sep + '\n' + question_text + '\n\n'
+                        # like_button is disabled now
+                        # like_number = cur.execute('''SELECT count(*) FROM Like_Question WHERE question_id = (%s)''', (question[0],)).fetchone()[0]
+                        # if question_owner == call.from_user.id:
+                        #     if like_number > 0:
+                        #         formatted_question = '#'+ str(question_id) + '   ' + str(question_status) + ' - Sent by: You - ' + 'Likes: {0}\n'.format(like_number) + q_sep + '\n' + question_text + '\n\n'
+                        #     else:
+                        #         formatted_question = '#'+ str(question_id) + '   ' + str(question_status) + ' - Sent by: You\n' + q_sep + '\n' + question_text + '\n\n'
+                        #
+                        # else:
+                        #     formatted_question = '#'+ str(question_id) + '   ' + str(question_status) + '\n' + q_sep + '\n' + question_text + '\n\n'
 
                         f.write(q_sep + '\n' + formatted_question)
 
