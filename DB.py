@@ -2,9 +2,9 @@
 import pgdb
 
 hostname = 'ec2-23-21-229-48.compute-1.amazonaws.com'
-username = 'vokrqxlqfmmhca'
-password = '37819826cf1d03f58199f84f43ed3fa37a12bbbb7f1f94e58565b6c7dbf82360'
-database = 'd3m1se3kb50fjl'
+username = 'lsogtsauvetnbw'
+password = '5dc24cbe1d2164ac1fcbf96d52ccf2490ddc117f0413c8b30320a8741d484628'
+database = 'd8e9n1egmtflks'
 
 print ("Using PyGreSQL")
 conn = pgdb.connect(host=hostname, user=username, password=password, database=database)
