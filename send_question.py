@@ -79,7 +79,7 @@ AND Users.tel_id = Answers.tel_id AND Users.role != (%s)''',
 
                     # like is disabled now
                     # keyboard.add(answer_question, like_button, load_answers, next_page_question)
-                    keyboard.add(answer_question, like_button, load_answers, next_page_question)
+                    keyboard.add(answer_question, load_answers, next_page_question)
 
                 else:
                     # like is disabled now
