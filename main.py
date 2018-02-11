@@ -288,7 +288,7 @@ def chat(message):
                 elif emoji.demojize(message.text) == ':high_voltage: Top Students':
                     msg_text = emoji.emojize('\n:down_arrow: Top 5 Students:\n\n')
                     best_students = cur.execute(
-                        '''SELECT st_num, first_name, last_name, point, tel_id FROM Users ORDER BY point DESC LIMIT 5''').fetchall()
+                        '''SELECT st_num, first_name, last_name, point, tel_id FROM Users WHERE tel_id IS NOT NULL ORDER BY point DESC LIMIT 5''').fetchall()
 
                     for student in best_students:
                         try:
