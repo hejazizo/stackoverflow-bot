@@ -132,7 +132,7 @@ def photo_doc(message):
 #***************************************#
 @bot.message_handler(func=lambda message: True)
 def chat(message):
-    print(emoji.demojize(message.text))
+    # print(emoji.demojize(message.text))
 
     try:
         state = cur.execute('''SELECT state FROM Users WHERE tel_id = (%s)''',
