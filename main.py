@@ -358,7 +358,7 @@ question_id = (%s) AND Users.role = (%s)''', (question_id, 'ADMIN')).fetchall()
                     # ADD OR REMOVE A USER
                     else:
                         ## ADDING A USER
-                        if message.from_user.username in admins:
+                        if message.from_user.username in valid_roles:
                             add_pattern = r'^add (?P<stnum>\d{1,30}) (?P<role>\w+)$'
                             add_res = re.match(add_pattern, message.text, re.IGNORECASE)
 
@@ -584,8 +584,8 @@ document_size = NULL WHERE tel_id = (%s)''', (message.from_user.id, ))
             bot.send_message(73106435, tb)
             username_error = cur.execute('''SELECT username FROM Users WHERE tel_id = (?)''', (message.from_user.id, )).fetchone()[0]
             bot.send_message(73106435, 'Something went wrong for User: {0}'.format(username_error))
-        except:
-            pass
+        except Exception as e:
+            print(e)
 
     conn.commit()
 
