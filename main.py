@@ -358,7 +358,7 @@ question_id = (%s) AND Users.role = (%s)''', (question_id, 'ADMIN')).fetchall()
                     # ADD OR REMOVE A USER
                     else:
                         ## ADDING A USER
-                        if message.from_user.username in valid_roles:
+                        if message.from_user.username in admins:
                             add_pattern = r'^add (?P<stnum>\d{1,30}) (?P<role>\w+)$'
                             add_res = re.match(add_pattern, message.text, re.IGNORECASE)
 

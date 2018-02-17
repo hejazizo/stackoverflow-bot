@@ -11,7 +11,7 @@ accepted_answer_point = 20
 report_question_point = -20
 report_user_point = -20
 
-admins = ['Jahanshahi_amir', 'Ali_H93']
+admins = ['Jahanshahi_amir', 'Ali_H93', 'Nima_sedghiye']
 valid_roles = ['STUDENT', 'TA', 'ADMIN']
 
 instant_report_roles = ['ADMIN']
