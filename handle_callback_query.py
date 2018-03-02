@@ -378,15 +378,7 @@ question_id = (%s) AND Answers.tel_id = Users.tel_id ORDER BY role DESC, accepte
                 role = cur.execute('''SELECT role FROM Users WHERE tel_id = (%s)''', (call.from_user.id, )).fetchone()[0]
 
                 if (question_reported >= report_question_limit) or (role in instant_report_roles):
-                    if role in instant_report_roles:
-                        question_owner_id = cur.execute('''SELECT tel_id FROM Questions WHERE id = (%s)''', (question_id, )).fetchone()[0]
-                        first_name, last_name, username = cur.execute('''SELECT first_name, last_name, username FROM Users WHERE tel_id = (%s)''', (question_owner_id, )).fetchone()
 
-                        bot.send_message(call.from_user.id, emoji.emojize(':white_heavy_check_mark: Question #Q_{} of user: {} {} (@{}) reported.'.format(question_id, first_name, last_name, username)))
-                        try:
-                            bot.send_message(question_owner_id, emoji.emojize(':warning: Your question #Q_{} has been reported. Please be careful when asking questions.'.format(question_id)))
-                        except:
-                            pass
 
                     reported_text, reported_photo, reported_document, reported_document_type, reported_document_size = \
                         cur.execute('''SELECT question, photo, document, document_type, document_size FROM Questions WHERE id = (%s)''',
@@ -397,7 +389,15 @@ question_id = (%s) AND Answers.tel_id = Users.tel_id ORDER BY role DESC, accepte
                     cur.execute('''UPDATE Questions SET question = (%s), status = (%s), photo = NULL, document = NULL, document_type = NULL, document_size = NULL WHERE id = (%s)''',
                                 ("___Reported Question___", 'REPORTED', question_id))
 
+                    if role in instant_report_roles:
+                        question_owner_id = cur.execute('''SELECT tel_id FROM Questions WHERE id = (%s)''', (question_id, )).fetchone()[0]
+                        first_name, last_name, username = cur.execute('''SELECT first_name, last_name, username FROM Users WHERE tel_id = (%s)''', (question_owner_id, )).fetchone()
 
+                        bot.send_message(call.from_user.id, emoji.emojize(':white_heavy_check_mark: Question #Q_{} of user: {} {} (@{}) reported.'.format(question_id, first_name, last_name, username)))
+                        try:
+                            bot.send_message(question_owner_id, emoji.emojize(':warning: Your question #Q_{} has been reported. Please be careful when asking questions.'.format(question_id)))
+                        except:
+                            pass
             else:
                 bot.answer_callback_query(callback_query_id=call.id, text="Question {0} has already been reported by you!".format(question_id),
                                           show_alert=True)
