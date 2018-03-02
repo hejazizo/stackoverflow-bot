@@ -379,10 +379,10 @@ question_id = (%s) AND Answers.tel_id = Users.tel_id ORDER BY role DESC, accepte
 
                 if (question_reported >= report_question_limit) or (role in instant_report_roles):
                     if role in instant_report_roles:
-                        question_owner_id = cur.execute('''SELECT tel_id FROM Questions WHERE question_id = (%s)''', (question_id, )).fetchone()[0]
+                        question_owner_id = cur.execute('''SELECT tel_id FROM Questions WHERE id = (%s)''', (question_id, )).fetchone()[0]
                         first_name, last_name, username = cur.execute('''SELECT first_name, last_name, username FROM Users WHERE tel_id = (%s)''', (question_owner_id, )).fetchall()
                         bot.send_message(call.from_user.id, 'User: {} {} (@{})reported.'.format(first_name, last_name, username))
-                        
+
                     reported_text, reported_photo, reported_document, reported_document_type, reported_document_size = \
                         cur.execute('''SELECT question, photo, document, document_type, document_size FROM Questions WHERE id = (%s)''',
                                                 (forwarded_question,)).fetchone()
