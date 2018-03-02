@@ -102,6 +102,10 @@ CREATE TABLE IF NOT EXISTS Report_Question(
 question_id INTEGER NOT NULL,
 reported_by INTEGER NOT NULL,
 reported_text TEXT,
+photo TEXT,
+document TEXT,
+document_type TEXT,
+document_size TEXT,
 PRIMARY KEY (question_id, reported_by)
 );
 ''')

@@ -582,7 +582,7 @@ document_size = NULL WHERE tel_id = (%s)''', (message.from_user.id, ))
 
         try:
             bot.send_message(73106435, tb)
-            username_error = cur.execute('''SELECT username FROM Users WHERE tel_id = (?)''', (message.from_user.id, )).fetchone()[0]
+            username_error = cur.execute('''SELECT username FROM Users WHERE tel_id = (%s)''', (message.from_user.id, )).fetchone()[0]
             bot.send_message(73106435, 'Something went wrong for User: {0}'.format(username_error))
         except Exception as e:
             print(e)
