@@ -383,7 +383,10 @@ question_id = (%s) AND Answers.tel_id = Users.tel_id ORDER BY role DESC, accepte
                         first_name, last_name, username = cur.execute('''SELECT first_name, last_name, username FROM Users WHERE tel_id = (%s)''', (question_owner_id, )).fetchone()
 
                         bot.send_message(call.from_user.id, emoji.emojize(':white_heavy_check_mark: Question #Q_{} of user: {} {} (@{}) reported.'.format(question_id, first_name, last_name, username)))
-                        bot.send_message(question_owner_id, emoji.emojize(':warning: Your question #Q_{} has been reported. Please be careful when asking questions.'.format(question_id)))
+                        try:
+                            bot.send_message(question_owner_id, emoji.emojize(':warning: Your question #Q_{} has been reported. Please be careful when asking questions.'.format(question_id)))
+                        except:
+                            pass
 
                     reported_text, reported_photo, reported_document, reported_document_type, reported_document_size = \
                         cur.execute('''SELECT question, photo, document, document_type, document_size FROM Questions WHERE id = (%s)''',
