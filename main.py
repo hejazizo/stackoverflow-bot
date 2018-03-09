@@ -140,11 +140,11 @@ def chat(message):
         if state is not None:
             state = state[0]
 
-            cur.execute('''UPDATE Users SET first_name = (%s), last_name = (%s), username = (%s), WHERE tel_id = (%s)''',
-                        (message.from_user.first_name,
-                         message.from_user.last_name,
-                         message.from_user.username,
-                         message.from_user.id))
+            # cur.execute('''UPDATE Users SET first_name = (%s), last_name = (%s), username = (%s), WHERE tel_id = (%s)''',
+            #             (message.from_user.first_name,
+            #              message.from_user.last_name,
+            #              message.from_user.username,
+            #              message.from_user.id))
             ####################################
             ####            IDLE            ####
             ####################################
