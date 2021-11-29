@@ -1,10 +1,10 @@
 # -*- coding: UTF-8 -*-
 import pgdb
 
-hostname = 'ec2-23-21-229-48.compute-1.amazonaws.com'
-username = 'lsogtsauvetnbw'
-password = '5dc24cbe1d2164ac1fcbf96d52ccf2490ddc117f0413c8b30320a8741d484628'
-database = 'd8e9n1egmtflks'
+hostname = ''
+username = ''
+password = ''
+database = ''
 
 print ("Using PyGreSQL")
 conn = pgdb.connect(host=hostname, user=username, password=password, database=database)
